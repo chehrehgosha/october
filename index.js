@@ -13,6 +13,7 @@ app.post("/", express.json(), async (req, res) => {
 
   // launching a headless browser
   const browser = await puppeteer.launch({
+    // change this option to false to see the browser flow
     headless: true,
     defaultViewport: null,
     args: ["--window-size=1920,1080"],
@@ -31,9 +32,11 @@ app.post("/", express.json(), async (req, res) => {
   await page
     .evaluate(async () => {
       // first check if there is a pop-up for the cookies policy
-      let el = await document.querySelector("#didomi-notice-agree-button");
-      if (el) {
-        await el.click();
+      let cookieNoticeElement = await document.querySelector(
+        "#didomi-notice-agree-button"
+      );
+      if (cookieNoticeElement) {
+        await cookieNoticeElement.click();
       }
     })
     .then(async () => {
@@ -55,14 +58,17 @@ app.post("/", express.json(), async (req, res) => {
       await page.evaluate(async () => {
         // getting the children of the results div --> meaning the search results
 
-        const childs = await document.querySelector("#listResults > ul")
-          .children;
+        const resultListChildren = await document.querySelector(
+          "#listResults > ul"
+        ).children;
 
-        var arr = [].slice.call(childs);
+        var arrayOfLiElement = [].slice.call(resultListChildren);
 
         // there are several possibilites in the search results, but basically here we are clicking on the header of the first search result
-        if (arr[0].querySelector("div > header > div > div > h3 > a"))
-          await arr[0]
+        if (
+          arrayOfLiElement[0].querySelector("div > header > div > div > h3 > a")
+        )
+          await arrayOfLiElement[0]
             .querySelector("div > header > div > div > h3 > a")
             .click();
       });
@@ -73,11 +79,12 @@ app.post("/", express.json(), async (req, res) => {
       await page
         .evaluate(async () => {
           //looking for the span which holds the phone number
-          const text = await document.querySelector("span.coord-numero.noTrad")
-            .innerHTML;
-          return text;
+          const telephoneNumber = await document.querySelector(
+            "span.coord-numero.noTrad"
+          ).innerHTML;
+          return telephoneNumber;
         })
-        .then((text) => res.send(text));
+        .then((telephoneNumber) => res.send(telephoneNumber));
     })
     .catch((error) => {
       res.send(
