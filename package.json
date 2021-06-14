@@ -1,0 +1,25 @@
+{
+  "name": "octoberinterview",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "casperjs": "^1.1.4",
+    "cheerio": "^1.0.0-rc.10",
+    "coffee-script": "^1.12.7",
+    "gapi": "0.0.3",
+    "google-search-results-nodejs": "^2.0.1",
+    "googleapis": "^39.2.0",
+    "jsdom": "^16.6.0",
+    "jsearch": "^1.0.0",
+    "phantomjs": "^2.1.7",
+    "puppeteer": "^10.0.0",
+    "slimerjs": "^1.0.0"
+  }
+}
