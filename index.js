@@ -13,7 +13,7 @@ app.post("/", express.json(), async (req, res) => {
 
   // launching a headless browser
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     defaultViewport: null,
     args: ["--window-size=1920,1080"],
   });
